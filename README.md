@@ -64,6 +64,8 @@ path always deletes).
 
 ## From-scratch setup (Hermes on your machine)
 
+You need Git, `uv`, and Python 3.11–3.14. Nothing else is assumed.
+
 Pin used for catalog: `303f4cf448cd0ab5f63264c4052485ac102fc13b` (`v0.1.0`).
 Hermes pin this was checked against: `c5f347ebe9b840c3dbe5ec99bbe8e36871f24393` (`>=0.22.0`).
 
@@ -73,11 +75,22 @@ catalog merge, `hermes plugins install mcp-quarantine-audit` should accept
 *caution* without `--force`.
 
 ```bash
-# 1. Hermes at 0.22.7+ (uv sync --frozen in a clone of NousResearch/hermes-agent)
-hermes plugins validate /path/to/hermes-mcp-quarantine --install-deps
-hermes plugins doctor /path/to/hermes-mcp-quarantine --ci
+# 1. Hermes (frozen install at the pin we used)
+git clone https://github.com/NousResearch/hermes-agent.git
+cd hermes-agent
+git checkout c5f347ebe9b840c3dbe5ec99bbe8e36871f24393
+uv sync --frozen
+export PATH="$PWD/.venv/bin:$PATH"
+hermes --version
 
-# 2. Install the exact pin from GitHub
+# 2. Optional: clone this plugin only if you want to validate the tree locally
+git clone https://github.com/WyrdWerk/hermes-mcp-quarantine.git
+cd hermes-mcp-quarantine
+git checkout 303f4cf448cd0ab5f63264c4052485ac102fc13b
+hermes plugins validate . --install-deps
+hermes plugins doctor . --ci
+
+# 3. Install the exact pin from GitHub (no local clone required)
 hermes plugins install WyrdWerk/hermes-mcp-quarantine \
   --ref 303f4cf448cd0ab5f63264c4052485ac102fc13b \
   --enable --yes-deps --force
