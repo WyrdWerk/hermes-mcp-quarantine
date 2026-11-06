@@ -1,19 +1,33 @@
-# Draft catalog entry. Do not open a PR until the public repo exists and
-# this sha is a real 40-hex commit on it.
+# Community catalog entry — mcp-quarantine-audit
+#
+# Owner-submitted: WyrdWerk owns https://github.com/WyrdWerk/hermes-mcp-quarantine
+# Exact-SHA pin (40-hex). No self-updating code.
 name: mcp-quarantine-audit
-display_name: MCP quarantine audit
+repo: https://github.com/WyrdWerk/hermes-mcp-quarantine
+sha: "303f4cf448cd0ab5f63264c4052485ac102fc13b"
 description: >-
   Run an MCP stdio server or npm/pip CLI on a throwaway InstaBox machine
-  and report hosts contacted, bytes each way, and files read or written.
-  Observes only; no verdict.
+  inside an isolated network namespace and report hosts contacted (DNS and
+  TLS SNI), bytes each way, files read or written, and IP-only connections.
+  Observes only; no verdict, no payload inspection, not containment.
+  Disclosure — network calls to api.instabox.sh; creates and deletes a cloud
+  machine (2 vCPU / 4 GiB); runs apt-get, ip, iptables, tcpdump, and strace
+  as root on that machine to set up capture, then drops the target to an
+  unprivileged user (setpriv, no capabilities, no-new-privs); netns NAT
+  drops metadata and RFC1918; INSTABOX_API_KEY is read through Hermes
+  secret_scope and is never sent to the box; no telemetry; no stored
+  credentials. Snapshot hermes-audit-base-v1 is account-private.
+maintainer: WyrdWerk
 tier: community
 category: tools
+docs_url: https://github.com/WyrdWerk/hermes-mcp-quarantine#readme
+version: "0.1.0"
 platforms: [linux]
 requires_hermes: ">=0.22.0"
-repo: https://github.com/WyrdWerk/hermes-mcp-quarantine
-sha: "0000000000000000000000000000000000000000"
 capabilities:
-  tools:
+  provides_tools:
     - audit_target
+  provides_hooks: []
+  provides_middleware: []
   requires_env:
     - INSTABOX_API_KEY
