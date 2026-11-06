@@ -1,0 +1,17 @@
+MCP quarantine audit — 2026-11-05T00:00:00Z
+target   mcp  mcp-server-fetch
+call     fetch {"url":"https://example.com"}
+machine  m_example_fetch (from sn_agq2wmqlugavt3pjz5e2jtscr4)
+cleanup  deleted
+
+run phase — 4000 ms, 12 packets, exit 0, +8 s idle
+  host         out      in       named by
+  example.com  6.2 kB   15.7 kB  sni
+  DNS: example.com
+
+mcp      mcp-server-fetch 2026.11.4, tools/list: 1
+  tools: fetch
+  tools/call: isError=False
+
+timing   create 15000 ms, netns 1000 ms, total 60000 ms
+note     observes only — DNS names, TLS SNI, byte counts, file paths. No payload inspection, no verdict.

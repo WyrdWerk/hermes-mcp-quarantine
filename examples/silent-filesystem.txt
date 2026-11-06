@@ -1,0 +1,15 @@
+MCP quarantine audit — 2026-11-05T00:00:00Z
+target   mcp  npx -y @modelcontextprotocol/server-filesystem@2.2.0 /tmp/work
+machine  m_example_silent (from sn_agq2wmqlugavt3pjz5e2jtscr4)
+cleanup  deleted
+
+run phase — 13000 ms, 0 packets, exit 0, +8 s idle
+  no packets
+
+files    172 read, 0 written
+
+mcp      secure-filesystem-server 2.2.0, tools/list: 16
+  tools: read_file, write_file, edit_file, create_directory, list_directory, directory_tree, move_file, search_files, get_file_info, list_allowed_directories, read_multiple_files, list_directory_with_sizes, get_file_info_extended, create_directory_recursive, read_media_file, zip_files
+
+timing   create 15000 ms, netns 1000 ms, total 61000 ms
+note     observes only — DNS names, TLS SNI, byte counts, file paths. No payload inspection, no verdict.

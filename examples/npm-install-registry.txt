@@ -1,0 +1,16 @@
+MCP quarantine audit — 2026-11-05T00:00:00Z
+target   npm  @modelcontextprotocol/server-filesystem@2.2.0
+install  npm install @modelcontextprotocol/server-filesystem@2.2.0
+machine  m_example_npm (from sn_agq2wmqlugavt3pjz5e2jtscr4)
+cleanup  deleted
+
+install phase — 1590 ms, 663 packets, exit 0, +8 s idle
+  host                 out      in      named by
+  registry.npmjs.org   40.5 kB  4.2 MB  sni
+  DNS: registry.npmjs.org
+
+run phase — 13000 ms, 0 packets, exit 0, +8 s idle
+  no packets
+
+timing   create 15000 ms, netns 1000 ms, total 58000 ms
+note     observes only — DNS names, TLS SNI, byte counts, file paths. No payload inspection, no verdict.

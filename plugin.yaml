@@ -1,0 +1,37 @@
+name: mcp-quarantine-audit
+version: 0.1.0
+description: >-
+  Audit what an MCP stdio server or npm/pip CLI does on a throwaway InstaBox
+  machine: hosts contacted, bytes each way, files read and written, and
+  IP-only connections. Observes only; gives no verdict.
+manifest_version: 2
+api_version: 1
+license: MIT
+homepage: https://github.com/WyrdWerk/hermes-mcp-quarantine
+requires_hermes: ">=0.22.0"
+tags: [mcp, security, audit, instabox]
+requires_env:
+  - name: INSTABOX_API_KEY
+    description: "InstaBox API key (ibk_…) used to boot the throwaway audit machine"
+    url: "https://instabox.sh"
+    secret: true
+config_schema:
+  snapshot_id:
+    type: str
+    default: "sn_agq2wmqlugavt3pjz5e2jtscr4"
+    description: "Snapshot to boot the audit machine from (empty = agent-browser template + bootstrap)"
+  template_id:
+    type: str
+    default: "agent-browser"
+    description: "Template used when snapshot_id is empty"
+  idle_seconds:
+    type: int
+    default: 8
+    description: "Seconds to keep capturing after the target exits (catches post-exit telemetry)"
+  keep_machine:
+    type: bool
+    default: false
+    description: "Leave the audit machine running for inspection instead of deleting it (slash command only)"
+provides_tools:
+  - audit_target
+provides_hooks: []

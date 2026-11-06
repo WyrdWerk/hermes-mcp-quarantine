@@ -1,0 +1,19 @@
+# Draft catalog entry. Do not open a PR until the public repo exists and
+# this sha is a real 40-hex commit on it.
+name: mcp-quarantine-audit
+display_name: MCP quarantine audit
+description: >-
+  Run an MCP stdio server or npm/pip CLI on a throwaway InstaBox machine
+  and report hosts contacted, bytes each way, and files read or written.
+  Observes only; no verdict.
+tier: community
+category: tools
+platforms: [linux]
+requires_hermes: ">=0.22.0"
+repo: https://github.com/WyrdWerk/hermes-mcp-quarantine
+sha: "0000000000000000000000000000000000000000"
+capabilities:
+  tools:
+    - audit_target
+  requires_env:
+    - INSTABOX_API_KEY

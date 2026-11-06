@@ -1,0 +1,21 @@
+MCP quarantine audit — 2026-11-06T19:40:53Z
+target   mcp  npx -y @modelcontextprotocol/server-filesystem@2.2.0 /tmp/work
+machine  m_agq3eya2jtor7tz5kofdyeiiva (from sn_agq2wmqlugavt3pjz5e2jtscr4)
+cleanup  deleted
+
+run phase — 13077 ms, 1475 packets, exit 0, +8 s idle
+  host                out      in      named by
+  registry.npmjs.org  70.2 kB  4.2 MB  sni
+  1.1.1.1             156 B    684 B   DNS resolver
+  DNS: registry.npmjs.org
+
+mcp      secure-filesystem-server 2.2.0, tools/list: 16
+  tools: read_file, read_text_file, read_media_file, read_multiple_files, write_file, append_file, edit_file, create_directory, list_directory, list_directory_with_sizes, directory_tree, move_file, copy_file, search_files, get_file_info, list_allowed_directories
+
+timing   create 15853 ms, netns 1091 ms, total 48857 ms
+note     observes only — DNS names, TLS SNI, byte counts, file paths. No payload inspection, no verdict.
+
+# Live notes
+# Machine GET after DELETE: 404. setpriv drop + public DNS 1.1.1.1 both observed.
+# npx -y downloaded during the run phase (no separate install=), so this is
+# not the silent 0-packet handshake from the Nov 5 spike. tools/list: 16.
