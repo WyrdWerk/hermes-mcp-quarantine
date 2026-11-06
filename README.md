@@ -62,6 +62,50 @@ path always deletes).
 - Refuses anything that is not `mcp`, `npm`, or `pip`.
 - Refuses very heavy npm targets (`wrangler`).
 
+## From-scratch setup (Hermes on your machine)
+
+Pin used for catalog: `303f4cf448cd0ab5f63264c4052485ac102fc13b` (`v0.1.0`).
+Hermes pin this was checked against: `c5f347ebe9b840c3dbe5ec99bbe8e36871f24393` (`>=0.22.0`).
+
+Until this plugin is in the official catalog, a Git install of a community
+source with a *caution* scan **blocks** unless you pass `--force`. After a
+catalog merge, `hermes plugins install mcp-quarantine-audit` should accept
+*caution* without `--force`.
+
+```bash
+# 1. Hermes at 0.22.7+ (uv sync --frozen in a clone of NousResearch/hermes-agent)
+hermes plugins validate /path/to/hermes-mcp-quarantine --install-deps
+hermes plugins doctor /path/to/hermes-mcp-quarantine --ci
+
+# 2. Install the exact pin from GitHub
+hermes plugins install WyrdWerk/hermes-mcp-quarantine \
+  --ref 303f4cf448cd0ab5f63264c4052485ac102fc13b \
+  --enable --yes-deps --force
+
+hermes plugins list --plain --no-bundled   # mcp-quarantine-audit enabled, pinned@303f4cf
+hermes plugins doctor mcp-quarantine-audit --ci
+```
+
+Put `INSTABOX_API_KEY` in the Hermes profile this session uses (catalog rule 11:
+`agent.secret_scope.get_secret`, not a `.env` file the plugin reads).
+
+Optional plugin settings: `snapshot_id` (WYRD1: `sn_agq2wmqlugavt3pjz5e2jtscr4`),
+`template_id` (`agent-browser` if the snapshot is missing), `idle_seconds` (8).
+
+```text
+/auditcheck
+/audit mcp npx -y @modelcontextprotocol/server-filesystem@2.2.0 /tmp/work
+```
+
+Expect ~50–60 s, a report with hosts/bytes/files, `tools/list` for MCP, and
+`cleanup deleted`. `npx -y` without a separate `install=` downloads during the
+**run** phase (registry.npmjs.org by SNI), which is not a silent 0-packet
+handshake.
+
+Progress: `/auditcheck` posts and edits from a worker. Classic CLI has been
+seen to accept the API with **no visible line**. Prefer Telegram or Desktop
+for a demo.
+
 ## Licence
 
 MIT.
